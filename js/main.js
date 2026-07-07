@@ -25,7 +25,7 @@ const selectors = {
   contactForm: document.querySelector('[data-contact-form]'),
   formSuccess: document.querySelector('[data-form-success]'),
   formError: document.querySelector('[data-form-error]'),
-  submitButton: document.querySelector('[data-submit-button]'),
+  submitButton: document.querySelector('[data-contact-form] button[type="submit"]'),
   currentYear: document.querySelector('[data-current-year]'),
   typing: document.querySelector('[data-typing]'),
 };
@@ -317,9 +317,11 @@ const handleFormSubmit = async (event) => {
   try {
     await sendToFormspree(formData);
     selectors.contactForm.reset();
+    selectors.formError.textContent = ''; // 폼 제출 성공 시 에러 메시지 초기화
     selectors.formSuccess.textContent = '메시지가 성공적으로 전송되었습니다. 빠르게 확인하겠습니다!';
   } catch (error) {
     selectors.formSuccess.textContent = '';
+    selectors.formError.textContent = error.message;
   } finally {
     setSubmitting(false);
   }
