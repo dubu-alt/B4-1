@@ -24,6 +24,7 @@ const selectors = {
   retryProjects: document.querySelector('[data-retry-projects]'),
   contactForm: document.querySelector('[data-contact-form]'),
   formSuccess: document.querySelector('[data-form-success]'),
+  submitButton: document.querySelector('[data-submit-button]'),
   currentYear: document.querySelector('[data-current-year]'),
   typing: document.querySelector('[data-typing]'),
 };
@@ -279,18 +280,48 @@ const validateContactForm = () => {
   return Object.values(errors).every((message) => message === ''); // 모든 에러 메시지가 빈 문자열이면 통과
 };
 
+const setSubmitting = (isSubmitting) => {
+  selectors.submitButton.disabled = isSubmitting;
+  selectors.submitButton.textContent = isSubmitting ? '전송 중...' : '메시지 보내기';
+};
+
+const sendToFormspree = async (formData) => {
+  const endpoint = selectors.contactForm.dataset.formspreeEndpoint;
+
+  const response = await fetch(endpoint, {
+    method: 'POST',
+    headers: { Accept: 'application/json' },
+    body: formData,
+  });
+
+  if (!response.ok) {
+    throw new Error('전송에 실패했습니다. 잠시 후 다시 시도해 주세요.');
+  }
+};
+
 // event.preventDefault()로 기본 폼 제출(새로고침)을 막고 JS로 직접 제어
 // 이벤트(폼 제출) → 상태 변경(유효성 검사 결과) → 화면 업데이트(에러/성공 메시지) 흐름의 대표 예시 ⑤
-const handleFormSubmit = (event) => {
+const handleFormSubmit = async (event) => {
   event.preventDefault();
   selectors.formSuccess.textContent = '';
 
   if (!validateContactForm()) {
-    return; // 유효성 검사 실패 시 여기서 중단, 에러 메시지는 이미 표시됨
+    return;
   }
 
-  selectors.contactForm.reset();
-  selectors.formSuccess.textContent = '메시지가 성공적으로 제출되었습니다. 빠르게 확인하겠습니다!'; // 성공 메시지
+  const formData = new FormData(selectors.contactForm);
+  setSubmitting(true);
+
+  try {
+    await sendToFormspree(formData);
+    selectors.contactForm.reset();
+    selectors.formSuccess.textContent = '메시지가 성공적으로 전송되었습니다. 빠르게 확인하겠습니다!';
+  } catch (error) {
+    selectors.formSuccess.textContent = '';
+    setFieldError(selectors.contactForm.elements.message, error.message);
+  } finally {
+    setSubmitting(false);
+  }
 };
 
 // 인라인 onclick 대신 addEventListener로 이벤트를 등록

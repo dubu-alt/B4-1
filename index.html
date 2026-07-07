@@ -134,11 +134,13 @@
           <p>궁금한 점이나 함께 만들고 싶은 서비스가 있다면 메시지를 남겨 주세요. 입력값을 확인한 뒤 화면에 제출 성공 메시지를 보여드립니다.</p>
         </div>
         <!-- novalidate: 브라우저 기본 유효성 검사 팝업 대신, JS로 직접 유효성 검사를 제어하기 위함 -->
-        <form class="contact-form" novalidate data-contact-form>
+        <form class="contact-form" novalidate data-contact-form data-formspree-endpoint="https://formspree.io/f/xbdvbznz">
+          
           <!-- label의 for와 input의 id를 일치시켜 접근성 확보 (label 클릭 시 해당 input에 포커스) -->
           <div class="form-field">
             <label for="name">이름</label>
             <input id="name" name="name" type="text" autocomplete="name" required>
+            
             <!-- 입력 필드 근처 에러 메시지 표시용 요소 -->
             <p class="error-message" id="name-error"></p>
           </div>
@@ -153,6 +155,7 @@
             <p class="error-message" id="message-error"></p>
           </div>
           <button class="button button--primary" type="submit">메시지 보내기</button>
+          
           <!-- 유효성 검사 통과 시 성공 메시지가 표시되는 영역 -->
           <p class="success-message" data-form-success role="status" aria-live="polite"></p>
         </form>
