@@ -24,6 +24,7 @@ const selectors = {
   retryProjects: document.querySelector('[data-retry-projects]'),
   contactForm: document.querySelector('[data-contact-form]'),
   formSuccess: document.querySelector('[data-form-success]'),
+  formError: document.querySelector('[data-form-error]'),
   submitButton: document.querySelector('[data-submit-button]'),
   currentYear: document.querySelector('[data-current-year]'),
   typing: document.querySelector('[data-typing]'),
@@ -46,7 +47,7 @@ const updateScrollUi = () => {
   selectors.topButton.classList.toggle('is-visible', scrollY >= 300); // 커스텀 설정값: 300px
 };
 
-// [체크리스트 + 보너스] 다크 모드 초기값 결정 로직
+// [보너스] 다크 모드 초기값 결정 로직
 // 1순위: localStorage에 저장된 사용자의 마지막 선택
 // 2순위(보너스): prefers-color-scheme으로 OS/브라우저의 시스템 테마 감지
 const getInitialTheme = () => {
@@ -304,6 +305,7 @@ const sendToFormspree = async (formData) => {
 const handleFormSubmit = async (event) => {
   event.preventDefault();
   selectors.formSuccess.textContent = '';
+  selectors.formError.textContent = '';
 
   if (!validateContactForm()) {
     return;
@@ -318,7 +320,6 @@ const handleFormSubmit = async (event) => {
     selectors.formSuccess.textContent = '메시지가 성공적으로 전송되었습니다. 빠르게 확인하겠습니다!';
   } catch (error) {
     selectors.formSuccess.textContent = '';
-    setFieldError(selectors.contactForm.elements.message, error.message);
   } finally {
     setSubmitting(false);
   }
