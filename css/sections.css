@@ -62,11 +62,21 @@
   margin: 0;
   padding: var(--space-lg);
   text-align: center;
+  background:
+    radial-gradient(circle at top left, color-mix(in srgb, var(--color-primary) 10%, transparent), transparent 60%),
+    var(--color-surface);
 }
 
 .profile-card img {
   width: min(320px, 100%);
   margin-inline: auto;
+  border-radius: var(--radius-md);
+  box-shadow: 0 8px 24px var(--color-shadow);
+  transition: transform var(--transition);
+}
+
+.profile-card img:hover {
+  transform: scale(1.03);
 }
 
 .profile-card figcaption {
