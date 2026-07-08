@@ -26,9 +26,22 @@
 │   └── main.js          # 메인 스크립트
 └── images/              # 이미지 디렉토리
 ```
+| 파일 | 역할 |
+| --- | --- |
+| `index.html` | 시맨틱 태그로 구성된 메인 페이지 (Hero, About, Skills, Projects, Contact, Footer) |
+| `css/style.css` | 개별 CSS 파일들을 `@import`로 불러오는 진입 파일 |
+| `css/base.css` | CSS 변수(`:root`, 다크모드 변수 `[data-theme="dark"]`) 및 전역 기본 스타일 관리 |
+| `css/layout.css` | 헤더·네비게이션·섹션 공통 구조·푸터 등 전체 레이아웃 관리 |
+| `css/components.css` | 버튼, 카드, 필터 버튼, 메뉴 토글 등 재사용 UI 컴포넌트 스타일 관리 |
+| `css/sections.css` | Hero/About/Skills/Projects/Contact 섹션별 세부 스타일 관리 |
+| `css/utilities.css` | 스크롤 reveal 애니메이션, `sr-only` 등 유틸리티 클래스 관리 |
+| `css/responsive.css` | 768px, 1024px 브레이크포인트 기준 반응형 스타일 관리 |
+| `js/main.js` | `state` 객체 기반으로 다크모드, 메뉴 토글, 스크롤 UI, GitHub API 연동, 프로젝트 필터링/렌더링, 폼 유효성 검사, 타이핑 효과 등 전체 인터랙션을 관리하는 메인 스크립트 |
 
-## 수행 항목 체크리스트
-
+<details>
+<summary><h2>수행 항목 체크리스트</h2></summary>
+<div markdown="1">
+  
 ### HTML 구조 (시맨틱 마크업)
 
 - [] 시맨틱 태그 사용 권장
@@ -104,6 +117,9 @@
 - **브라우저**: 최신 Chrome 브라우저에서 정상 동작
 - **GitHub API 주의**: 인증 없이 호출 시 시간당 60회 제한(레이트 리밋)이 있으므로, 짧은 시간 내 반복 새로고침을 피한다
 
+</div>
+</details>
+
 ### 커스텀 설정값 명세
 
 | 항목                         | 기준값     | 비고           |
@@ -112,11 +128,34 @@
 | 네비게이션 배경색 변경       | 60px 이상  | 자유 변경 가능 |
 | Intersection Observer 임계값 | 0.2 이상   | 자유 변경 가능 |
 
+
 ## 결과물 (Deliverables)
+- 배포 URL: [GitHub Pages](https://dubu-alt.github.io/B4-1/)
+<details>
+<summary><h2>스크린샷:</h2></summary>
+<div markdown="2">
+  
+#### 1) 반응형 & 다크모드
+ 
+| 데스크톱 (라이트) | 데스크톱 (다크) |
+| :---: | :---: |
+| ![데스크톱 라이트 모드](images/Desktop.png) | ![데스크톱 다크 모드](images/Desktop_Darkmode.png) |
+ 
+| 모바일 (라이트) | 모바일 (다크) |
+| :---: | :---: |
+| ![모바일 라이트 모드](images/mobile.png) | ![모바일 다크 모드](images/mobile_darkmode.png) |
 
-- 배포 URL: [GitHub Pages]()
-- 스크린샷:
+---
+#### 2) GitHub API 연동 — 상태별 UI
+ 
+| 로딩 상태 | 성공 상태 |
+| :---: | :---: |
+| ![로딩 상태](images/rate-limit.png) | ![성공 상태 - 프로젝트 목록 렌더링](images/success.png) |
+ 
+| 빈 상태 | 에러 상태 |
+| :---: | :---: |
+| ![빈 상태 - 표시할 프로젝트 없음](images/empty.png) | ![에러 상태 - 프로젝트 로드 실패](images/error.png) |
 
-| 데스크톱                                        | 모바일                                       | 다크 모드                                     |
-| ----------------------------------------------- | -------------------------------------------- | --------------------------------------------- |
-| ![데스크톱 화면]() | ![모바일 화면]() | ![다크 모드 화면]() |
+</div>
+</details>
+
